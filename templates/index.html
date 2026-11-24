@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusMitra | University AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">C</div><div><strong>CampusMitra</strong><span>UNIVERSITY AI ASSISTANT</span></div></div>
+    <div class="side-label">WORKSPACE</div>
+    <button class="nav-item active" id="chatNav"><span>✦</span> Ask CampusMitra</button>
+    <button class="nav-item" id="docsNav"><span>▤</span> Knowledge documents</button>
+    <button class="nav-item" id="evalNav"><span>◫</span> Evaluation</button>
+    <div class="side-card">
+      <div class="side-card-icon">✧</div>
+      <strong>Grounded answers</strong>
+      <p>CampusMitra searches your uploaded documents and shows where its answers come from.</p>
+    </div>
+    <div class="sidebar-bottom"><span class="pulse"></span> Local application <span class="version">v1.0</span></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow">YOUR UNIVERSITY, MADE SIMPLE</div><h1 id="pageTitle">Ask CampusMitra</h1></div>
+      <div class="status-pill"><span class="pulse"></span><span id="statusText">Checking knowledge base…</span></div>
+    </header>
+
+    <section id="chatView" class="view">
+      <div class="welcome">
+        <div class="welcome-icon">✦</div>
+        <div class="eyebrow">HELLO, STUDENT</div>
+        <h2>What would you like to<br><em>know today?</em></h2>
+        <p>Ask questions about academics, examinations, attendance, fees, scholarships, hostel rules and placements. Answers are based on the documents uploaded by the administrator.</p>
+      </div>
+      <div class="suggestions">
+        <button class="suggestion" data-question="What is the minimum attendance required?"><span>◷</span><b>Attendance</b><small>Check attendance rules</small></button>
+        <button class="suggestion" data-question="When does the semester examination begin?"><span>▦</span><b>Examinations</b><small>Find exam schedules</small></button>
+        <button class="suggestion" data-question="What scholarship information is available?"><span>◇</span><b>Scholarships</b><small>Explore student support</small></button>
+        <button class="suggestion" data-question="What are the placement procedures?"><span>↗</span><b>Placements</b><small>Understand placement steps</small></button>
+      </div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <form id="chatForm" class="chat-input">
+        <textarea id="questionInput" rows="1" placeholder="Ask a question about your university…" required></textarea>
+        <button type="submit" id="sendButton" aria-label="Send question">↑</button>
+        <div class="input-hint">Enter to send · Shift + Enter for a new line</div>
+      </form>
+      <div class="disclaimer">CampusMitra answers only from the documents currently available in its knowledge base.</div>
+    </section>
+
+    <section id="docsView" class="view hidden">
+      <div class="section-intro"><h2>Knowledge documents</h2><p>Upload official university PDFs or TXT files. Each document is extracted, divided into overlapping chunks, embedded and added to the FAISS search index.</p></div>
+      <div class="upload-card">
+        <div class="upload-symbol">↑</div><h3>Add university documents</h3>
+        <p>Choose a PDF or TXT file · Maximum file size 20 MB</p>
+        <input type="file" id="fileInput" accept=".pdf,.txt" hidden>
+        <button class="primary-btn" id="chooseFile">Choose a document</button>
+        <div id="uploadStatus" class="upload-status"></div>
+      </div>
+      <div class="doc-heading"><div><h3>Indexed documents</h3><p id="docCount">Loading documents…</p></div><button class="secondary-btn" id="rebuildBtn">↻ Rebuild index</button></div>
+      <div id="documentList" class="document-list"></div>
+      <div class="note-box"><b>Important:</b> Only upload documents you are authorized to use. The included sample files are demonstration data, not official university policies.</div>
+    </section>
+
+    <section id="evalView" class="view hidden">
+      <div class="section-intro"><h2>System evaluation</h2><p>Run the included question set to estimate keyword coverage, grounded responses and average response time. Review the answers manually before using results in your report.</p></div>
+      <div class="eval-intro-card"><div class="eval-icon">◫</div><div><h3>Evaluate CampusMitra</h3><p>The included dataset contains sample questions with expected answers. Upload the matching sample documents before running the evaluation.</p></div><button class="primary-btn" id="runEvalBtn">Run evaluation</button></div>
+      <div id="evalResults" class="eval-results"></div>
+    </section>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
